@@ -9,6 +9,10 @@
 	text-align: center;
 }
 
-.children .mystic-badge {
-	display: none;
+.mystic-badge.mystic-badge-inline {
+	position: inherit;
+	top: inherit;
+	left: inherit;
+	padding: 2px 4px;
+	font-size: 0.8em;
 }

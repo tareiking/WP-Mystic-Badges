@@ -29,17 +29,47 @@ function mystic_show_avatar_badge( $avatar, $id_or_email, $size ){
 
 	if ( is_object( $id_or_email ) && property_exists( $id_or_email, 'comment_ID' ) ) {
 
-		// Dummy data
-		$user_subscription_level = array( 'bliss', 'flash', 'casual' );
-		$user_subscription_level = $user_subscription_level[ rand( 0, sizeof( $user_subscription_level ) -1 ) ];
-		// $user_subscription_level = mystic_badges_get_subscriber_level();
+		if ( $id_or_email->comment_parent != '0') {
+			return $avatar;
+		}
 
+		$user_subscription_level = mystic_badges_get_subscription_level();
 		$avatar = $avatar .  "<span class=\"mystic-badge mystic-badge-$user_subscription_level \"> $user_subscription_level </span>";
 	}
 
 	return $avatar;
 }
 add_filter( 'get_avatar', 'mystic_show_avatar_badge', 99, 3 );
+
+function mystic_badge_show_inline( $return, $author, $comment_ID ){
+
+	global $comment;
+
+	if ( $comment->comment_parent != '0' ) {
+
+		$user_subscription_level = mystic_badges_get_subscription_level();
+		$return = $return . " <span class=\"mystic-badge mystic-badge-inline mystic-badge-$user_subscription_level \">$user_subscription_level</span>";
+
+	}
+
+	return $return;
+}
+add_filter( 'get_comment_author_link', 'mystic_badge_show_inline', 99, 3 );
+
+/**
+ * TODO
+ */
+function mystic_badges_get_subscription_level(){
+
+	global $user;
+
+	$user_subscription_level = array( 'bliss', 'flash', 'casual' );
+	$user_subscription_level = $user_subscription_level[ rand( 0, sizeof( $user_subscription_level ) -1 ) ];
+	// $user_subscription_level = mystic_badges_get_subscriber_level();
+
+	return $user_subscription_level;
+
+}
 
 function mystic_badges_init(){
 
@@ -55,6 +85,9 @@ function mystic_badges_enqueue_scripts(){
 
 }
 
+/**
+ * TODO
+ */
 function mystic_badges_get_subscriber_level(){
 
 	// Get subscriber level of commenter 
