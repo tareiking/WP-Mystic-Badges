@@ -28,7 +28,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 function mystic_show_avatar_badge( $avatar, $id_or_email, $size ){
 
 	if ( is_object( $id_or_email ) && property_exists( $id_or_email, 'comment_ID' ) ) {
-		$avatar = $avatar .  "<span class=\"mystic-badge\" >Bliss</span>";
+
+		// Dummy data
+		$user_subscription_level = array( 'bliss', 'flash', 'casual' );
+		$user_subscription_level = $user_subscription_level[ rand( 0, sizeof( $user_subscription_level ) -1 ) ];
+		// $user_subscription_level = mystic_badges_get_subscriber_level();
+
+		$avatar = $avatar .  "<span class=\"mystic-badge mystic-badge-$user_subscription_level \"> $user_subscription_level </span>";
 	}
 
 	return $avatar;
@@ -46,5 +52,12 @@ function mystic_badges_enqueue_scripts(){
 
 	wp_register_style( 'mystic-badges', plugin_dir_url( __FILE__ ) . '/css/mystic-badges.css' );
 	wp_enqueue_style( 'mystic-badges' );
+
+}
+
+function mystic_badges_get_subscriber_level(){
+
+	// Get subscriber level of commenter 
+	// todo
 
 }
