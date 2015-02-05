@@ -47,7 +47,7 @@ function mystic_badge_show_inline( $return, $author, $comment_ID ){
 
 	if ( $comment->comment_parent != '0' ) {
 
-		$user_subscription_level = mystic_badges_get_subscription_level();
+		$user_subscription_level = mystic_badges_get_subscription_title( $comment_ID );
 		$return = $return . " <span class=\"mystic-badge mystic-badge-inline mystic-badge-$user_subscription_level \">$user_subscription_level</span>";
 
 	}
@@ -59,15 +59,30 @@ add_filter( 'get_comment_author_link', 'mystic_badge_show_inline', 99, 3 );
 /**
  * TODO
  */
-function mystic_badges_get_subscription_level(){
+function mystic_badges_get_subscription_title( $comment_ID ){
 
-	global $user;
+	$comment = get_comment( $comment_ID );
+	$author_id = $comment->user_id;
 
-	$user_subscription_level = array( 'bliss', 'flash', 'casual' );
-	$user_subscription_level = $user_subscription_level[ rand( 0, sizeof( $user_subscription_level ) -1 ) ];
-	// $user_subscription_level = mystic_badges_get_subscriber_level();
+	if ( ! $subscription = WC_Subscriptions_Manager::get_users_subscriptions( $author_id ) ) {
+		return;
+	}
 
-	return $user_subscription_level;
+	$products = wp_list_pluck( $subscription, 'product_id' );
+
+	foreach ($products as $sub_id => $product) {
+		$product_id = $product;
+	}
+
+	$subscription_title = strtolower( get_the_title( $product_id ) );
+
+	if ( strstr( $subscription_title, 'bliss' ) ){
+		return 'Bliss';
+	} else if ( strstr( $subscription_title, 'mega' ) ){
+		return 'Mega';
+	} else {
+		return 'no subscription';
+	}
 
 }
 
@@ -82,15 +97,5 @@ function mystic_badges_enqueue_scripts(){
 
 	wp_register_style( 'mystic-badges', plugin_dir_url( __FILE__ ) . '/css/mystic-badges.css' );
 	wp_enqueue_style( 'mystic-badges' );
-
-}
-
-/**
- * TODO
- */
-function mystic_badges_get_subscriber_level(){
-
-	// Get subscriber level of commenter 
-	// todo
 
 }
