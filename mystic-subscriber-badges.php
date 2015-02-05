@@ -33,7 +33,7 @@ function mystic_show_avatar_badge( $avatar, $id_or_email, $size ){
 			return $avatar;
 		}
 
-		$user_subscription_level = mystic_badges_get_subscription_level();
+		$user_subscription_level = mystic_badges_get_subscription_title( $id_or_email->comment_ID );
 		$avatar = $avatar .  "<span class=\"mystic-badge mystic-badge-$user_subscription_level \"> $user_subscription_level </span>";
 	}
 
