@@ -29,7 +29,14 @@ function mystic_show_avatar_badge( $avatar, $id_or_email, $size ){
 
 	if ( is_object( $id_or_email ) && property_exists( $id_or_email, 'comment_ID' ) ) {
 
+		$comment = get_comment( $comment_ID );
+		$author_id = $comment->user_id;
+
 		if ( $id_or_email->comment_parent != '0') {
+			return $avatar;
+		}
+
+		if ( ! $subscription = WC_Subscriptions_Manager::get_users_subscriptions( $author_id ) ) {
 			return $avatar;
 		}
 
