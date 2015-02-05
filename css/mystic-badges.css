@@ -27,3 +27,7 @@ span.mystic-badge-Mega {
 	color: white;
 	border: 0;
 }
+
+#sidebar .mystic-badge {
+	display: none;
+}
