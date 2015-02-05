@@ -1,5 +1,4 @@
 .mystic-badge {
-	border: 1px solid gray;
 	border-radius: 3px;
 	position: absolute;
 	box-sizing: border-box;
@@ -7,12 +6,24 @@
 	top: 74px;
 	width: 68px;
 	text-align: center;
+	color: #666;
+	background-color: #fff;
+	border: 1px solid #999;
 }
-
 .mystic-badge.mystic-badge-inline {
 	position: inherit;
 	top: inherit;
 	left: inherit;
 	padding: 2px 4px;
 	font-size: 0.8em;
+}
+span.mystic-badge-Bliss {
+	background-color: #ff5385;
+	color: white;
+	border: 0;
+}
+span.mystic-badge-Mega {
+	background-color: rgb( 159, 221, 223 );
+	color: white;
+	border: 0;
 }
