@@ -22,9 +22,10 @@ span.mystic-badge-Bliss {
 	color: white;
 	border: 0;
 }
-span.mystic-badge-Mega {
+span.mystic-badge-Bliss {
 	background-color: rgb( 159, 221, 223 );
 	color: white;
+	font-weight: bold;
 	border: 0;
 }
 
