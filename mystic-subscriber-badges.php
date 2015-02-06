@@ -46,7 +46,6 @@ function mystic_show_avatar_badge( $avatar, $id_or_email, $size ){
 
 	return $avatar;
 }
-add_filter( 'get_avatar', 'mystic_show_avatar_badge', 99, 3 );
 
 function mystic_badge_show_inline( $return, $author, $comment_ID ){
 
@@ -61,10 +60,9 @@ function mystic_badge_show_inline( $return, $author, $comment_ID ){
 
 	return $return;
 }
-add_filter( 'get_comment_author_link', 'mystic_badge_show_inline', 99, 3 );
 
 /**
- * TODO
+ * Returns the title of the 
  */
 function mystic_badges_get_subscription_title( $comment_ID ){
 
@@ -95,9 +93,16 @@ function mystic_badges_get_subscription_title( $comment_ID ){
 
 function mystic_badges_init(){
 
+	if ( ! class_exists( 'WooCommerce' ) && ! class_exists( 'WC_Subscriptions' ) ) {
+		return;
+	}
+	add_filter( 'get_avatar', 'mystic_show_avatar_badge', 99, 3 );
+
+	add_filter( 'get_comment_author_link', 'mystic_badge_show_inline', 99, 3 );
+
 	add_action( 'wp_enqueue_scripts', 'mystic_badges_enqueue_scripts' );
 }
-add_action( 'plugins_loaded', 'mystic_badges_init' );
+add_action( 'init', 'mystic_badges_init' );
 
 
 function mystic_badges_enqueue_scripts(){
